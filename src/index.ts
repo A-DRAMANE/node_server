@@ -20,7 +20,7 @@ dotenv.config();
 if (!process.env.PORT) {
     process.exit(1);
 }
-import { port } from "../constants";
+import { itemsURL, port } from "../constants";
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -32,7 +32,7 @@ const app: express.Application = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use("/api/menu/items", itemsRouter);
+app.use(itemsURL, itemsRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
