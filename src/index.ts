@@ -20,7 +20,7 @@ dotenv.config();
 if (!process.env.PORT) {
     process.exit(1);
 }
-import { itemsURL, port } from "../constants";
+import { itemsURL, port, success } from "../constants";
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -41,6 +41,6 @@ app.use(notFoundHandler);
  */
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(success);
 });
 
