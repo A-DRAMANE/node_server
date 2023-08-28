@@ -21,6 +21,7 @@ if (!process.env.PORT) {
     process.exit(1);
 }
 import { itemsURL, port, success } from "../constants";
+import { run } from "../connection";
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -28,6 +29,8 @@ const app: express.Application = express();
 /**
  *  App Configuration
  */
+
+run
 
 app.use(helmet());
 app.use(cors());
