@@ -1,34 +1,36 @@
 import * as oracledb from 'oracledb';
 import { dbConfig } from '../connection/dbConfig';
 import { Assurance } from '../interfaces/assurances/assurance.interface';
-oracledb.initOracleClient({ libDir: 'D:/instantclient_19_20' });
+import { responseData, responseObjet } from '../interfaces';
 
-export const findAll = async (): Promise<any> => {
-    // Établir une connexion à la base de données
-    oracledb.getConnection(dbConfig, (err, connection) => {
-        if (err) {
-            console.error("Erreur de connexion :", err);
-            return "Erreur de connexion :"+ err;
-        }
+export const findAll = async (): Promise<responseData | undefined> => {
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
 
-        // Votre code pour exécuter des requêtes ici
-        connection.execute<Assurance>(
-            "SELECT * FROM ASSURANCES",
-            [],
-            (err, result) => {
-                if (err) {
-                    console.error("Erreur d'exécution de la requête :", err);
-                    return "Erreur d'exécution de la requête : "+ err;
-                }
-                return result.rows;
-            }
-        );
+        // Configuration pour obtenir un résultat avec les noms de colonnes
+        const options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
+        const result = await connection.execute<Assurance>("SELECT * FROM ASSURANCES",[],options);
+        await connection.close();
 
-        // Fermer la connexion lorsque vous avez terminé
-        connection.close((err) => {
-            if (err) {
-                console.error("Erreur lors de la fermeture de la connexion :", err);
-            }
-        });
-    });
+        return {datas:result.rows,statut:true};
+        } catch (error) {
+        console.error("Erreur :", error);
+        return { statut:false, message: 'Erreur lors de la récupération des données' }
+    }
+};
+
+export const find = async (id:string): Promise<responseData | undefined> => {
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+
+        // Configuration pour obtenir un résultat avec les noms de colonnes
+        const options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
+        const result = await connection.execute<Assurance>("SELECT * FROM ASSURANCES WHERE NUM_POLICE_ASSURANCE="+id,[],options);
+        await connection.close();
+
+        return {datas:result.rows,statut:true};
+        } catch (error) {
+        console.error("Erreur :", error);
+        return { statut:false, message: 'Erreur lors de la récupération des données' }
+    }
 };

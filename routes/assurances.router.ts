@@ -2,7 +2,7 @@
  * Required External Modules and Interfaces
  */
 import express from "express";
-import { getAllAssuranceController } from "../controllers/assurances.controller";
+import { getAllAssuranceController, getIdAssuranceController } from "../controllers/assurances.controller";
 
 /**
  * Router Definition
@@ -15,3 +15,6 @@ export const assuranceRouter = express.Router();
 
 // GET items
 assuranceRouter.get("/", getAllAssuranceController);
+
+// GET items/:id
+assuranceRouter.get("/:id", getIdAssuranceController);

@@ -6,6 +6,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import * as oracledb from 'oracledb';
 import { itemsRouter } from "../routes/items.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
@@ -14,6 +15,7 @@ import { notFoundHandler } from "./middleware/not-found.middleware";
 //config env var and port
 dotenv.config();
 
+oracledb.initOracleClient({ libDir: 'D:/instantclient_19_20' });
 /**
  * App Variables
  */
