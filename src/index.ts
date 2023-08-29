@@ -20,8 +20,8 @@ dotenv.config();
 if (!process.env.PORT) {
     process.exit(1);
 }
-import { itemsURL, port, success } from "../constants";
-import { run } from "../connection";
+import { assurancesURL, itemsURL, port, success } from "../constants";
+import { assuranceRouter } from "../routes/assurances.router";
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -30,12 +30,12 @@ const app: express.Application = express();
  *  App Configuration
  */
 
-run
 
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(itemsURL, itemsRouter);
+app.use(assurancesURL, assuranceRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 

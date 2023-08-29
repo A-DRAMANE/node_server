@@ -1,37 +1,30 @@
-const oracledb = require('oracledb');
-export let connection:any;
+import * as oracledb from 'oracledb';
+import { dbConfig } from "./dbConfig";
 
-
-export async function run() {
-    try {
-        await oracledb.createPool({
-            user          : process.env.ORACLE_USER,
-            password      : process.env.ORACLE_PASSWORD,
-            connectString : `${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
-        });
-
-        let result;
-        try {
-            // get connection from the pool and use it
-            connection = await oracledb.getConnection();
-            result = await connection.execute(`SELECT * FROM Assurances`);
-            console.log("Result is:", result);
-        } catch (err) {
-            throw (err);
-        } finally {
-            if (connection) {
-                try {
-                    await connection.close(); // Put the connection back in the pool
-                } catch (err) {
-                    throw (err);
-                }
-            }
-        }
-    } catch (err:any) {
-        console.error(err.message);
-    } finally {
-        await oracledb.getPool().close(0);
+// Établir une connexion à la base de données
+oracledb.getConnection(dbConfig, (err, connection) => {
+    if (err) {
+        console.error("Erreur de connexion :", err);
+        return;
     }
-}
 
-run();
+    // Votre code pour exécuter des requêtes ici
+    connection.execute(
+        "SELECT * FROM ma_table",
+        [],
+        (err, result) => {
+            if (err) {
+                console.error("Erreur d'exécution de la requête :", err);
+                return;
+            }
+            console.log(result.rows);
+        }
+    );
+
+    // Fermer la connexion lorsque vous avez terminé
+    connection.close((err) => {
+        if (err) {
+            console.error("Erreur lors de la fermeture de la connexion :", err);
+        }
+    });
+});
