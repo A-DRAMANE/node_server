@@ -8,7 +8,7 @@ import { responseData } from "../interfaces";
 export const getAllAssuranceController = async (req: Request, res: Response) => {
   const allAssurances: responseData | undefined = await AssuranceService.findAll();
   if (allAssurances?.statut) {
-    res.json(allAssurances.datas)
+    res.json(allAssurances)
   }else{
     res.status(500).json(allAssurances?.message);
   }
@@ -16,9 +16,10 @@ export const getAllAssuranceController = async (req: Request, res: Response) => 
 
 export const getIdAssuranceController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
+  // res.json(id)
   const allAssurances: responseData | undefined = await AssuranceService.find(id);
   if (allAssurances?.statut) {
-    res.json(allAssurances.datas)
+    res.json(allAssurances)
   }else{
     res.status(500).json(allAssurances?.message);
   }
