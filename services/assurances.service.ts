@@ -16,7 +16,7 @@ export const findAll = async (): Promise<responseData | undefined> => {
         } catch (error) {
         console.error("Erreur :", error);
         return { statut:false, message: 'Erreur lors de la récupération des données' }
-    } 
+    }
 };
 
 export const find = async (id:string): Promise<responseData | undefined> => {

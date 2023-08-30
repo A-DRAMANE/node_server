@@ -16,7 +16,6 @@ export const getAllAssuranceController = async (req: Request, res: Response) => 
 
 export const getIdAssuranceController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
-  // res.json(id)
   const allAssurances: responseData | undefined = await AssuranceService.find(id);
   if (allAssurances?.statut) {
     res.json(allAssurances)
