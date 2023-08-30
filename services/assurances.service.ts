@@ -63,7 +63,7 @@ export const create = async (assurance:Assurance): Promise<responseData | undefi
         await connection.close();
 
         const response = await find(assurance.NUM_POLICE_ASSURANCE)
-        return responseFormat({datas:result.rows,message: "Nouvel élément inséré avec succès"});
+        return responseFormat({datas:response?.datas,message: "Nouvel élément inséré avec succès"});
     } catch (error) {
         console.error("Erreur :", error);
         return responseFormat({statut:false, message: 'Erreur lors de l\'insertion.'});
