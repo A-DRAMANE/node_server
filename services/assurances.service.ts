@@ -3,6 +3,7 @@ import { dbConfig } from '../connection/dbConfig';
 import { Assurance } from '../interfaces/assurances/assurance.interface';
 import { responseData } from '../interfaces';
 import { ASSURANCES } from '../constants/tables';
+import responseFormat from '../constants/responseFormat';
 
 export const findAll = async (): Promise<responseData | undefined> => {
     try {
@@ -13,10 +14,10 @@ export const findAll = async (): Promise<responseData | undefined> => {
         const result = await connection.execute<Assurance>(`SELECT * FROM ${ASSURANCES} order by DATE_INSERT desc`,[],options);
         await connection.close();
 
-        return {datas:result.rows,statut:true};
+        return responseFormat({datas:result.rows});
         } catch (error) {
         console.error("Erreur :", error);
-        return { statut:false, message: 'Erreur lors de la récupération des données' }
+        return responseFormat({statut:false, message: 'Erreur lors de la récupération des données'})
     }
 };
 
@@ -29,10 +30,10 @@ export const find = async (id:string): Promise<responseData | undefined> => {
         const result = await connection.execute<Assurance>(`SELECT * FROM ${ASSURANCES} WHERE NUM_POLICE_ASSURANCE='${id}'`,[],options);
         await connection.close();
 
-        return {datas:result.rows,statut:true};
+        return responseFormat({datas:result.rows});
         } catch (error) {
         console.error("Erreur :", error);
-        return { statut:false, message: 'Erreur lors de la récupération des données' }
+        return responseFormat({statut:false, message: 'Erreur lors de la récupération de l\'élément: '+id});
     }
 };
 
@@ -62,9 +63,9 @@ export const create = async (assurance:Assurance): Promise<responseData | undefi
         await connection.close();
 
         const response = await find(assurance.NUM_POLICE_ASSURANCE)
-        return {datas:response?.datas,statut:true, message: "Nouvel élément inséré avec succès"};
+        return responseFormat({datas:result.rows,message: "Nouvel élément inséré avec succès"});
     } catch (error) {
         console.error("Erreur :", error);
-        return { statut:false, message: 'Erreur lors de la récupération des données' }
+        return responseFormat({statut:false, message: 'Erreur lors de l\'insertion.'});
     }
 };
