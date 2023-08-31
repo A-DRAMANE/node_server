@@ -29,8 +29,9 @@ export const find = async (id:string): Promise<responseData | undefined> => {
         const options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
         const result = await connection.execute<Assurance>(`SELECT * FROM ${ASSURANCES} WHERE NUM_POLICE_ASSURANCE='${id}'`,[],options);
         await connection.close();
-
-        return responseFormat({datas:result.rows});
+        const message:string | undefined = result.rows && result?.rows?.length==0?"Nous n'avons pas trouvez d'élément correspondant à: "+id:undefined;
+        
+        return responseFormat({datas:result.rows,message:message});
         } catch (error) {
         console.error("Erreur :", error);
         return responseFormat({statut:false, message: 'Erreur lors de la récupération de l\'élément: '+id});
