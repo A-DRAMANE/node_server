@@ -17,11 +17,11 @@ export const getAllAssuranceController = async (req: Request, res: Response) => 
 
 export const getIdAssuranceController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
-  const allAssurances: responseData | undefined = await AssuranceService.find(id);
-  if (allAssurances?.statut) {
-    res.json(allAssurances)
+  const getAssurances: responseData | undefined = await AssuranceService.find(id);
+  if (getAssurances?.statut) {
+    res.json(getAssurances)
   }else{
-    res.status(500).json(allAssurances);
+    res.status(500).json(getAssurances);
   }
 }
 
@@ -30,6 +30,19 @@ export const createAssuranceController = async (req: Request, res: Response) => 
   // res.json(req.body);
   
   const allAssurances: responseData | undefined = await AssuranceService.create(newAssurance);
+  if (allAssurances?.statut) {
+    res.json(allAssurances)
+  }else{
+    res.status(500).json(allAssurances);
+  }
+}
+
+export const updateAssuranceController = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  const newAssurance: Assurance = req.body;
+  // res.json(req.body);
+  
+  const allAssurances: responseData | undefined = await AssuranceService.update(id,newAssurance);
   if (allAssurances?.statut) {
     res.json(allAssurances)
   }else{

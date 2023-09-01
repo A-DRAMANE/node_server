@@ -2,7 +2,7 @@
  * Required External Modules and Interfaces
  */
 import express from "express";
-import { createAssuranceController, getAllAssuranceController, getIdAssuranceController } from "../controllers/assurances.controller";
+import { createAssuranceController, getAllAssuranceController, getIdAssuranceController, updateAssuranceController } from "../controllers/assurances.controller";
 
 /**
  * Router Definition
@@ -21,3 +21,6 @@ assuranceRouter.get("/:id", getIdAssuranceController);
 
 // POST items/:id
 assuranceRouter.post("/", createAssuranceController);
+
+// PUT items/:id
+assuranceRouter.put("/:id", updateAssuranceController);

@@ -1,16 +1,37 @@
 curl -X POST -H "Content-Type: application/json" -d '{
-    "NUM_POLICE_ASSURANCE": "2JJDLBCHDLF",
-    "DATE_EFFET": "27/07/2023",
-    "DATE_ECHEANCE": "27/07/2024",
-    "DESTINATION": null,
-    "VILLE": null,
-    "OBSERVATION": "Salad",
-    "MONTANT": 500000,
-    "ID_USER": "SYSTEM",
-    "NUM_VEHI": null,
-    "NUM_MARCHE": "Marché 4",
-    "MATRI_EMP": null,
-    "MATRI_FSSEUR": 103,
-    "NUM_TYPE": 2
-  }' http://localhost:7000/api/assurances -i
+  "NUM_POLICE_ASSURANCE": "2JJDLBCHDLF",
+  "DATE_EFFET": "27/07/2023",
+  "DATE_ECHEANCE": "27/07/2024",
+  "DESTINATION": null,
+  "VILLE": null,
+  "OBSERVATION": "Salad",
+  "MONTANT": 500000,
+  "ID_USER": "SYSTEM",
+  "NUM_VEHI": null,
+  "NUM_MARCHE": "Marché 4",
+  "MATRI_EMP": null,
+  "MATRI_FSSEUR": 103,
+  "NUM_TYPE": 2
+}' http://localhost:7000/api/assurances -i
+ 
+curl -X PUT -H "Content-Type: application/json" -d '{
+  "DATE_EFFET": "27/07/2023",
+  "DATE_ECHEANCE": "27/07/2024",
+  "DESTINATION": null,
+  "VILLE": null,
+  "OBSERVATION": "Salad",
+  "MONTANT": 500000,
+  "ID_USER": "SYSTEM",
+  "NUM_VEHI": null,
+  "NUM_MARCHE": "Marché 4",
+  "MATRI_EMP": null,
+  "MATRI_FSSEUR": null,
+  "IS_ACTIVE": null,
+  "UPDATE_USER": null,
+  "UPDATE_DATE": null,
+  "RUPTURE_USER": null,
+  "RUPTURE_DATE": null,
+  "USER_VALIDATE": null,
+  "VALIDATE_DATE": 103
+}' http://localhost:7000/api/assurances/2JJDLBCHDLF -i
   

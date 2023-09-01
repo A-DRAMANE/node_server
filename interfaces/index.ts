@@ -5,7 +5,7 @@ export interface responseData{
     statut?:boolean,
     message?:string,
     code?:number,
-    datas?:any[] | undefined
+    datas?:Assurance[]
 }
 
 export interface responseObjet{
