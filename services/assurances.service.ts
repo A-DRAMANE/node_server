@@ -116,3 +116,20 @@ export const update = async (id:string,assurance:BaseAssurance): Promise<respons
         return responseFormat({statut:false, message: 'Erreur lors de la modification.'});
     }
 };
+
+export const deleteId = async (id:string): Promise<responseData | undefined> => {
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+
+        // Configuration pour obtenir un résultat avec les noms de colonnes
+        const options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
+        const result = await connection.execute<Assurance>(`DELETE ${ASSURANCES} WHERE NUM_POLICE_ASSURANCE='${id}'`,[],options);
+        await connection.commit();
+        await connection.close();
+        const response = await findAll();
+        return responseFormat({datas:response?.datas,message: "Modification éffectuer avec succès",code:codes.success});
+        } catch (error) {
+        console.error("Erreur find :", error);
+        return responseFormat({statut:false, message: 'Erreur lors de la récupération de l\'élément: '+id});
+    }
+};

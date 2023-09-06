@@ -49,3 +49,13 @@ export const updateAssuranceController = async (req: Request, res: Response) => 
     res.status(500).json(allAssurances);
   }
 }
+
+export const delAssuranceController = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  const getAssurances: responseData | undefined = await AssuranceService.deleteId(id);
+  if (getAssurances?.statut) {
+    res.json(getAssurances)
+  }else{
+    res.status(500).json(getAssurances);
+  }
+}
